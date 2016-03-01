@@ -5,12 +5,12 @@ import java.lang.reflect.Method;
 
 /**
  * Created by dun on 2016/2/28.
+ *
  */
 public class ViewAndType {
         public int id;
         public Class viewTypeClass;
         public Field field;
-        public boolean isThirdView = false;
         public String bindDateMethodName;
         public Method bindDateMethod;
     public ViewAndType() {
@@ -25,18 +25,9 @@ public class ViewAndType {
     }
 
     public void setBindDateMethodName(String bindDateMethodName) {
-        if(isThirdView){
             this.bindDateMethodName = bindDateMethodName;
-        }
     }
 
-    public boolean isThirdView() {
-        return isThirdView;
-    }
-
-    public void setIsThirdView(boolean isThirdView) {
-        this.isThirdView = isThirdView;
-    }
 
     public Method getBindDateMethod() {
         return bindDateMethod;

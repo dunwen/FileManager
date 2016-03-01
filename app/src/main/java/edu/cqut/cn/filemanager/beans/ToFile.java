@@ -1,18 +1,16 @@
 package edu.cqut.cn.filemanager.beans;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dundunwen.annotation.BindId;
-import com.dundunwen.annotation.BindThirdPartId;
 
 import edu.cqut.cn.filemanager.R;
 
 /**
  * Created by dun on 2016/2/26.
+ *
  */
 public class ToFile {
     String path = "";
@@ -22,7 +20,7 @@ public class ToFile {
     @BindId(Id = R.id.simpleTv,ViewType = TextView.class)
     String fileName = "";
 
-    @BindThirdPartId(Id = R.id.imageView,viewType = de.hdodenhof.circleimageview.CircleImageView.class,methodName = "setImageBitmap")
+    @BindId(Id = R.id.imageView,ViewType = de.hdodenhof.circleimageview.CircleImageView.class,methodName = "setImageBitmap")
     Bitmap icon;
 
     @BindId(Id = R.id.imageViewFormHttp,ViewType = ImageView.class)

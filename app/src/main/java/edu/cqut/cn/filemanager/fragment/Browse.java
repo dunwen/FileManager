@@ -3,6 +3,7 @@ package edu.cqut.cn.filemanager.fragment;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dundunwen.FastAdapter;
 import com.dundunwen.SimpleAdapter;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,7 @@ import edu.cqut.cn.filemanager.beans.ToFile;
 
 /**
  * Created by dun on 2016/2/25.
+ *
  */
 public class Browse extends Fragment{
     private static Browse mBrowse = null;
@@ -82,7 +88,6 @@ public class Browse extends Fragment{
 
 
         SimpleAdapter sa = new SimpleAdapter(list);
-
     }
 
     private void initdate() {
@@ -90,7 +95,6 @@ public class Browse extends Fragment{
 
         for(int i = 0; i<20;i++){
             ToFile file = new ToFile();
-
             file.setFileName("hi + " + i);
             Bitmap b = BitmapFactory.decodeResource(getResources(),R.mipmap.head_icon);
             file.setIcon(b);

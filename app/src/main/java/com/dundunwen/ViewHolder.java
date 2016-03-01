@@ -1,5 +1,6 @@
 package com.dundunwen;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.dundunwen.bean.ViewAndType;
 
 import net.tsz.afinal.FinalBitmap;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 /**
  * Created by dun on 2016/2/27.
+ * 
  */
 public class ViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> viewMap = new SparseArray<>();
@@ -74,15 +77,23 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         finalBitmap.display(iv, url);
     }
 
-    public void bindDateForThird(int id, Object value, ViewAndType mViewAndType) {
+    public void bindDate(ViewAndType mViewAndType, Object value, Context mContext) {
+        int id = mViewAndType.getId();
         View view = viewMap.get(id);
+
+        if(view instanceof ImageView && value instanceof String){
+            FinalBitmap finalBitmap = FinalBitmap.create(mContext);
+            finalBitmap.display(view, (String) value);
+            return;
+        }
+
         Method mMethod = mViewAndType.getBindDateMethod();
         if (mMethod == null) {
             Class clazz = mViewAndType.getViewTypeClass();
             String methodName = mViewAndType.getBindDateMethodName();
             Method[] methods = clazz.getMethods();
             for (Method method : methods) {
-                if (method.getName().equals(methodName)) {
+                if (method.getName().equals(methodName)&&method.getParameterTypes().length==1) {
                     mViewAndType.setBindDateMethod(method);
                     mMethod = method;
                 }
@@ -90,7 +101,9 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         }
 
         try {
-            mMethod.invoke(view,value);
+            if(mMethod!=null){
+                mMethod.invoke(view,value);
+            }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -98,5 +111,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         }
 
     }
+
 
 }

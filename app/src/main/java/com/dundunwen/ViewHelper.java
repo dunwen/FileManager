@@ -1,14 +1,15 @@
 package com.dundunwen;
 
-import android.util.SparseArray;
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.dundunwen.annotation.BindId;
-import com.dundunwen.annotation.BindThirdPartId;
 import com.dundunwen.bean.ViewAndType;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,28 +18,10 @@ import java.util.Map;
  *
  * */
 public class ViewHelper {
-//    private static ViewHelper mViewHelper = null;
     private Map<Integer,ViewAndType> viewTypeMap = new HashMap<>();
     public ViewHelper(Class clazz){
         getViewFromClass(clazz);
     }
-
-//    public static ViewHelper getInstance(){
-//        if(mViewHelper == null){
-//            synchronized (ViewHelper.class){
-//                if(mViewHelper == null){
-//                    mViewHelper = new ViewHelper();
-//                }
-//            }
-//        }
-//        return mViewHelper;
-//    }
-//    public static ViewHelper getInstance(Class clazz){
-//        ViewHelper vh = getInstance();
-//        vh.getViewFromClass(clazz);
-//        return vh;
-//    }
-
     public Map<Integer,ViewAndType> getViewTypeMap() {
         return viewTypeMap;
     }
@@ -56,33 +39,39 @@ public class ViewHelper {
 
         for (Field field : fields) {
             BindId mAnnotation = field.getAnnotation(BindId.class);
-            BindThirdPartId thirdPartId = field.getAnnotation(BindThirdPartId.class);
             if(mAnnotation != null){
                 int viewId = mAnnotation.Id();
-                Class calzz = mAnnotation.ViewType();
+                Class viewType = mAnnotation.ViewType();
                 ViewAndType vat = new ViewAndType();
-                vat.viewTypeClass = calzz;
+                String bindDateMethodName = getBindDateMethodName(viewType,field.getType());
+                if(TextUtils.isEmpty(bindDateMethodName)){
+                    bindDateMethodName = mAnnotation.methodName();
+                    if(TextUtils.isEmpty(bindDateMethodName)){
+                        throw new RuntimeException("the view you set is unsupported please set your methodName for" + field.getName());
+                    }
+                }
+                vat.viewTypeClass = viewType;
                 vat.id = viewId;
                 vat.field = field;
-                viewTypeMap.put(vat.id,vat);
-            }else if(thirdPartId != null){
-                int viewId = thirdPartId.Id();
-                Class cla = thirdPartId.viewType();
-                String bindDateMethodName = thirdPartId.methodName();
-
-                ViewAndType vat = new ViewAndType();
-                vat.setIsThirdView(true);
                 vat.setBindDateMethodName(bindDateMethodName);
-                vat.setField(field);
-                vat.setId(viewId);
-                vat.setViewTypeClass(cla);
-                viewTypeMap.put(viewId,vat);
-
+                viewTypeMap.put(vat.id,vat);
             }
-
-
         }
     }
+
+    private String getBindDateMethodName(Class<?> viewType, Class<?> valueType){
+        if(viewType.isAssignableFrom(TextView.class)||viewType==TextView.class){
+            return "setText";
+        }else if(viewType.isAssignableFrom(ImageView.class)||viewType==ImageView.class){
+            if(valueType == Drawable.class){
+                return "setImageDrawable";
+            }else{
+                return "setImageBitmap";
+            }
+        }
+        return null;
+    }
+
     public void clearViewMap(){
         viewTypeMap.clear();
     }

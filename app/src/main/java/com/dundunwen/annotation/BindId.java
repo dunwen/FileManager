@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Created by dun on 2016/2/27.
+ *
  */
 
 @Target(ElementType.FIELD)
@@ -14,4 +15,5 @@ import java.lang.annotation.Target;
 public @interface BindId {
     int Id();
     Class ViewType();
+    String methodName() default "";
 }
