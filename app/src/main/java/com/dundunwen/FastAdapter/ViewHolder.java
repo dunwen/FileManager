@@ -1,25 +1,18 @@
-package com.dundunwen;
+package com.dundunwen.FastAdapter;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.dundunwen.bean.ViewAndType;
+import com.dundunwen.FastAdapter.Impls.LoadImageFromUrlPolicyImpl;
+import com.dundunwen.FastAdapter.bean.ViewAndType;
 
-import net.tsz.afinal.FinalBitmap;
-
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by dun on 2016/2/27.
@@ -31,6 +24,13 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = "ViewHolder";
 
+    /**
+     * @param itemView
+     * @param viewHelper 从管理数据的ViewHelper
+     * @param onClickListener 单击事件监听
+     * @param onLongClickListener 长按事件监听
+     *
+     * */
     public ViewHolder(final View itemView, ViewHelper viewHelper, final FastAdapter.OnItemClickListener onClickListener, final FastAdapter.OnItemLongClickListener onLongClickListener) {
         super(itemView);
         this.mViewHelper = viewHelper;
@@ -62,28 +62,27 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void bindDateForTextView(int id, String s) {
-        TextView tv = (TextView) viewMap.get(id);
-        tv.setText(s);
-    }
 
-    public void bindDateForImageView(int id, Bitmap bitmap) {
-        ImageView iv = (ImageView) viewMap.get(id);
-        iv.setImageBitmap(bitmap);
-    }
 
-    public void bindDateForImageViewFormHttp(FinalBitmap finalBitmap, int id, String url) {
-        ImageView iv = (ImageView) viewMap.get(id);
-        finalBitmap.display(iv, url);
-    }
-
-    public void bindDate(ViewAndType mViewAndType, Object value, Context mContext) {
+    /**
+     *
+     * 绑定view与数据，假若 需要绑定的view是imageView的子类且需要绑定的数据是String，则会自动调用网络加载策略
+     *
+     * @param mViewAndType 管理类
+     * @param value 需要绑定的数据
+     * @param mLoadImageFromUrlPolicyImpl 从网络加载图片的策略，由用户自定义
+     *
+     * */
+    public void bindDate(ViewAndType mViewAndType, Object value, LoadImageFromUrlPolicyImpl mLoadImageFromUrlPolicyImpl) {
         int id = mViewAndType.getId();
         View view = viewMap.get(id);
 
         if(view instanceof ImageView && value instanceof String){
-            FinalBitmap finalBitmap = FinalBitmap.create(mContext);
-            finalBitmap.display(view, (String) value);
+            if(mLoadImageFromUrlPolicyImpl != null){
+                mLoadImageFromUrlPolicyImpl.bindImageFormUri((ImageView)view,(String)value);
+            }else{
+                Log.e(TAG, "bindDate: have you remember to set LoadImageFromUrlPolicyImpl on FastAdapter?");
+            }
             return;
         }
 

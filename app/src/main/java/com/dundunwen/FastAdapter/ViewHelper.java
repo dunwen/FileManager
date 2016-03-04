@@ -1,12 +1,12 @@
-package com.dundunwen;
+package com.dundunwen.FastAdapter;
 
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dundunwen.annotation.BindId;
-import com.dundunwen.bean.ViewAndType;
+import com.dundunwen.FastAdapter.annotation.BindId;
+import com.dundunwen.FastAdapter.bean.ViewAndType;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class ViewHelper {
                 ViewAndType vat = new ViewAndType();
                 String bindDateMethodName = getBindDateMethodName(viewType,field.getType());
                 if(TextUtils.isEmpty(bindDateMethodName)){
-                    bindDateMethodName = mAnnotation.methodName();
+                    bindDateMethodName = mAnnotation.BindDateMethodName();
                     if(TextUtils.isEmpty(bindDateMethodName)){
                         throw new RuntimeException("the view you set is unsupported please set your methodName for" + field.getName());
                     }

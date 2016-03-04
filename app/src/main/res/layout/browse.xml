@@ -6,12 +6,30 @@
     android:padding="16dp"
     >
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/browse_recycler_view"
+        android:orientation="vertical"
         >
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:id="@+id/browse_recycler_view"
+            >
+        </android.support.v7.widget.RecyclerView>
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:background="#bcbcbc"-->
+            <!--android:layout_weight="1"-->
+            <!-->-->
+
+        <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/browse_FAB"
@@ -20,8 +38,8 @@
         app:layout_anchor="@id/browse_recycler_view"
         app:layout_anchorGravity="bottom|right|end"
         android:layout_margin="16dp"
-        android:src="@mipmap/icon_add"
-        app:layout_behavior="edu.cqut.cn.filemanager.behavior.ScrollAwareFABBehavior"
-        />
+        android:src="@mipmap/icon_add"/>
+        <!--app:layout_behavior="edu.cqut.cn.filemanager.borwseUnit.fragment.behavior.ScrollAwareFABBehavior"-->
+
 
 </android.support.design.widget.CoordinatorLayout>

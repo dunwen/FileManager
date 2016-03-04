@@ -1,4 +1,4 @@
-package com.dundunwen.annotation;
+package com.dundunwen.FastAdapter.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 public @interface BindId {
     int Id();
     Class ViewType();
-    String methodName() default "";
+    String BindDateMethodName() default "";
 }

@@ -7,10 +7,15 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:titleTextStyle">@style/toolbar_titleStyle</item>
+    </style>
+
+    <style name="toolbar_titleStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:actionMenuTextColor">@color/title_text_color</item>
     </style>
 </resources>

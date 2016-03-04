@@ -1,4 +1,4 @@
-package edu.cqut.cn.filemanager.behavior;
+package edu.cqut.cn.filemanager.borwseUnit.fragment.behavior;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

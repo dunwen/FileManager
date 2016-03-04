@@ -1,10 +1,13 @@
-package com.dundunwen.bean;
+package com.dundunwen.FastAdapter.bean;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
  * Created by dun on 2016/2/28.
+ *
+ *这个类的作用是为了保存每一个使用了注解的 Field 的数据，需要保存的数据有 对应的view的Id，view的type，该
+ * 字段的Field的引用，绑定数据使用的方法名，绑定数据使用的方法的引用
  *
  */
 public class ViewAndType {
