@@ -11,4 +11,5 @@ public interface Browse_Model_Impl {
     List<ToFile> getFileList();
     void selectNextPath(String fileName);
     void selectBackPath();
+    boolean createNewFile(String fileName);
 }

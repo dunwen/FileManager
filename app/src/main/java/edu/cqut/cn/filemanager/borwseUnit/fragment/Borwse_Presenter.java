@@ -9,9 +9,8 @@ import edu.cqut.cn.filemanager.borwseUnit.fragment.impls.Browse_View_Impl;
 
 /**
  * Created by dun on 2016/3/4.
- *
  */
-public class Borwse_Presenter implements Browse_Present_Impl{
+public class Borwse_Presenter implements Browse_Present_Impl {
     private Browse_Model_Impl model;
     private Browse_View_Impl view;
 
@@ -28,15 +27,36 @@ public class Borwse_Presenter implements Browse_Present_Impl{
 
     @Override
     public void selectFile(ToFile file) {
-        switch (file.getFileType()){
-            case ToFile.FILE_TYPE_DIRECTORY :{
+        switch (file.getFileType()) {
+            case ToFile.FILE_TYPE_DIRECTORY: {
                 model.selectNextPath(file.getPath());
                 getFileList();
-            } break;
-            case ToFile.FILE_TYPE_IMAGE: view.openImage(file);break;
-            case ToFile.FILE_TYPE_VIDEO: view.openVideo(file);break;
-            case ToFile.FILE_TYPE_TXT:view.openTxt(file);break;
-            case ToFile.FILE_TYPE_UNKNOW:break;
+            }
+            break;
+            case ToFile.FILE_TYPE_IMAGE:
+                view.openImage(file);
+                break;
+            case ToFile.FILE_TYPE_VIDEO:
+                view.openVideo(file);
+                break;
+            case ToFile.FILE_TYPE_TXT:
+                view.openTxt(file);
+                break;
+            case ToFile.FILE_TYPE_UNKNOW:
+                break;
+        }
+    }
+
+    @Override
+    public void createNewFile(String fileName) {
+        view.showProgressDialog();
+        boolean is =model.createNewFile(fileName);
+        view.dismissProgressDialog();
+        if(is){
+            view.setFilesList(model.getFileList());
+            view.showMsg("创建成功啦~");
+        }else{
+            view.showMsg("创建失败啦~");
         }
     }
 }

@@ -30,5 +30,12 @@ public class Borwse_Model implements Browse_Model_Impl {
 
     @Override
     public void selectBackPath() {
+
+
+    }
+
+    @Override
+    public boolean createNewFile(String name) {
+        return mFileHelper.createFileOnCurrentPath(name);
     }
 }

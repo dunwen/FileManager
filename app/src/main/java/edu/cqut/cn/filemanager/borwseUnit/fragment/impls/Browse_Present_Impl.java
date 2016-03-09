@@ -8,4 +8,5 @@ import edu.cqut.cn.filemanager.beans.ToFile;
 public interface Browse_Present_Impl {
     void getFileList();
     void selectFile(ToFile file);
+    void createNewFile(String fileName);
 }

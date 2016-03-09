@@ -13,4 +13,10 @@ public interface Browse_View_Impl {
     void openImage(ToFile toFile);
     void openTxt(ToFile toFile);
     void openVideo(ToFile toFile);
+    void showProgressDialog();
+    void dismissProgressDialog();
+    void showMsg(String msg);
+
+
+
 }

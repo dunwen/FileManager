@@ -154,4 +154,14 @@ public class FileHelper {
         return ect.equals("mp4") || ect.equals("rmvb");
     }
 
+    public boolean createFileOnCurrentPath(String fileName){
+        File newFile = new File(currentPath+"/"+fileName);
+        if(newFile.exists()){
+            return false;
+        }
+        newFile.mkdir();
+        getAllFilesFromCurrentPath();
+        return newFile.exists();
+    }
+
 }
